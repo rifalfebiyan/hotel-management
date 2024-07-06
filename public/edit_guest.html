@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Tamu</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS for sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 48px 0 0; /* Adjust based on your design */
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+        }
+        .sidebar-sticky {
+            position: relative;
+            top: 0;
+            height: calc(100vh - 48px); /* Adjust based on your design */
+            padding-top: .5rem;
+            overflow-x: hidden;
+            overflow-y: auto; /* Scrollable */
+        }
+        @supports ((position: -webkit-sticky) or (position: sticky)) {
+            .sidebar-sticky {
+                position: -webkit-sticky;
+                position: sticky;
+                top: 48px; /* Adjust based on your design */
+                height: calc(100vh - 48px); /* Adjust based on your design */
+                padding-top: .5rem;
+                overflow-x: hidden;
+                overflow-y: auto; /* Scrollable */
+            }
+        }
+
+        /* Center align text in sidebar */
+        .sidebar h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Form styling */
+        .edit-form {
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+        <!-- Sidebar toggle button -->
+        <button id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    
+        <!-- Rest of your HTML content -->
+        <!-- Sidebar and main content remains the same -->
+    
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar">
+                <div class="sidebar-sticky">
+                    <h3 class="text-white mt-3 mb-4">Hotel Gerhana</h3>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="index.html">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="add_guest.html">Tambah Tamu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="guest_list.html">Daftar Tamu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Log Out</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2 class="h2">Edit Tamu</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="guest_list.html">Daftar Tamu</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Edit Tamu</li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <div class="edit-form">
+                    <form id="editGuestForm">
+                        <div class="form-group">
+                            <label for="name">Nama Tamu</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="roomNumber">Nomor Kamar</label>
+                            <input type="number" class="form-control" id="roomNumber" name="roomNumber" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Harga Kamar</label>
+                            <input type="number" class="form-control" id="price" name="price" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkIn">Check In</label>
+                            <input type="date" class="form-control" id="checkIn" name="checkIn" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkOut">Check Out</label>
+                            <input type="date" class="form-control" id="checkOut" name="checkOut" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nik">NIK</label>
+                            <input type="text" class="form-control" id="nik" name="nik" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Alamat</label>
+                            <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Nomor Telepon</label>
+                            <input type="text" class="form-control" id="phone" name="phone" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                    </form>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // JavaScript code for pre-filling form with guest data
+        window.onload = function() {
+            // Retrieve index from URL query string
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const index = parseInt(urlParams.get('index'));
+
+            // Retrieve guests from localStorage
+            let guests = JSON.parse(localStorage.getItem('guests'));
+            let guest = guests[index];
+
+            // Fill form with guest data
+            document.getElementById('name').value = guest.name;
+            document.getElementById('roomNumber').value = guest.roomNumber;
+            document.getElementById('price').value = guest.price;
+            document.getElementById('checkIn').value = guest.checkIn;
+            document.getElementById('checkOut').value = guest.checkOut;
+            document.getElementById('nik').value = guest.nik;
+            document.getElementById('address').value = guest.address;
+            document.getElementById('phone').value = guest.phone;
+
+            // Handle form submission
+            document.getElementById('editGuestForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                // Update guest object with form values
+                guest.name = document.getElementById('name').value;
+                guest.roomNumber = document.getElementById('roomNumber').value;
+                guest.price = document.getElementById('price').value;
+                guest.checkIn = document.getElementById('checkIn').value;
+                guest.checkOut = document.getElementById('checkOut').value;
+                guest.nik = document.getElementById('nik').value;
+                guest.address = document.getElementById('address').value;
+                guest.phone = document.getElementById('phone').value;
+
+                // Update guests array in localStorage
+                guests[index] = guest;
+                localStorage.setItem('guests', JSON.stringify(guests));
+
+                // Redirect back to guest_list.html
+                window.location.href = 'guest_list.html';
+            });
+        };
+        // Function to toggle sidebar
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('show');
+
+        const mainContent = document.querySelector('.main-content');
+        mainContent.classList.toggle('sidebar-open');
+    }
+
+    // Event listener for sidebar toggle button
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        sidebarToggle.addEventListener('click', function() {
+            toggleSidebar();
+        });
+    });
+    </script>
+</body>
+</html>

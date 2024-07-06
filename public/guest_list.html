@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Tamu</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Styling sama seperti sebelumnya */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 48px 0 0;
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+            background-color: #343a40;
+        }
+        .sidebar-sticky {
+            position: relative;
+            top: 0;
+            height: calc(100vh - 48px);
+            padding-top: .5rem;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        @supports ((position: -webkit-sticky) or (position: sticky)) {
+            .sidebar-sticky {
+                position: -webkit-sticky;
+                position: sticky;
+                top: 48px;
+                height: calc(100vh - 48px);
+                padding-top: .5rem;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+        }
+        .sidebar h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .card-deck .card {
+            min-width: 220px;
+            margin-bottom: 20px;
+        }
+        .card:hover {
+            background-color: #add8e6;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            font-size: 14px; /* Adjust font size */
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: 250px;
+                position: fixed;
+                z-index: 1000;
+                height: 100%;
+                overflow-y: auto;
+                box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+                background-color: #343a40;
+                color: #fff;
+                transition: transform 0.3s ease;
+            }
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+                transition: margin-left 0.3s ease;
+            }
+            .sidebar h3 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar toggle button -->
+    <button id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Rest of your HTML content -->
+    <!-- Sidebar and main content remains the same -->
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar">
+                <div class="sidebar-sticky">
+                    <h3 class="text-white mt-3 mb-4">Hotel Gerhana</h3>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="index.html">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="add_guest.html">Tambah Tamu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active text-white" href="guest_list.html">Daftar Tamu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Log Out</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-content">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2 class="h2">Daftar Tamu</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="guest_list.html">Daftar Tamu</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Data Tamu</li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Nomor Kamar</th>
+                            <th>Harga per Malam</th>
+                            <th>Check In</th>
+                            <th>Check Out</th>
+                            <th>NIK</th>
+                            <th>Alamat</th>
+                            <th>Nomor Telepon</th>
+                            <th>Total Harga</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="guestsTable">
+                        <!-- Guest data will be dynamically added here -->
+                    </tbody>
+                </table>
+                <!-- Button to save guests to server -->
+                <button onclick="saveGuestsToServer()" class="btn btn-primary">Save Guests</button>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        window.onload = function() {
+            // Load guest data and populate the table
+            loadGuests();
+        };
+
+        function loadGuests() {
+            let guests = localStorage.getItem('guests') ? JSON.parse(localStorage.getItem('guests')) : [];
+            let guestsTableBody = document.getElementById('guestsTable');
+            guestsTableBody.innerHTML = '';
+
+            guests.forEach(function(guest, index) {
+                let row = guestsTableBody.insertRow();
+
+                let nameCell = row.insertCell(0);
+                nameCell.textContent = guest.name;
+
+                let roomNumberCell = row.insertCell(1);
+                roomNumberCell.textContent = guest.roomNumber;
+
+                let priceCell = row.insertCell(2);
+                priceCell.textContent = 'Rp ' + guest.price;
+
+                let checkInCell = row.insertCell(3);
+                checkInCell.textContent = guest.checkIn;
+
+                let checkOutCell = row.insertCell(4);
+                checkOutCell.textContent = guest.checkOut;
+
+                let nikCell = row.insertCell(5);
+                nikCell.textContent = guest.nik;
+
+                let addressCell = row.insertCell(6);
+                addressCell.textContent = guest.address;
+
+                let phoneCell = row.insertCell(7);
+                phoneCell.textContent = guest.phone;
+
+                let totalPrice = calculateTotalPrice(guest.price, guest.checkIn, guest.checkOut);
+                let totalPriceCell = row.insertCell(8);
+                totalPriceCell.textContent = 'Rp ' + totalPrice;
+
+                let actionsCell = row.insertCell(9);
+                actionsCell.innerHTML = `
+                    <button class="btn btn-sm btn-primary" onclick="editGuest(${index})">Edit</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteGuest(${index})">Delete</button>
+                `;
+            });
+        }
+
+        function calculateTotalPrice(pricePerNight, checkInDate, checkOutDate) {
+            const price = parseInt(pricePerNight);
+            const checkIn = new Date(checkInDate);
+            const checkOut = new Date(checkOutDate);
+            const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+            const totalPrice = price * nights;
+            return totalPrice;
+        }
+
+        function editGuest(index) {
+            window.location.href = 'edit_guest.html?index=' + index;
+        }
+
+        function deleteGuest(index) {
+            let guests = JSON.parse(localStorage.getItem('guests'));
+            guests.splice(index, 1);
+            localStorage.setItem('guests', JSON.stringify(guests));
+            location.reload();
+        }
+
+        function saveGuestsToServer() {
+            let guests = localStorage.getItem('guests');
+            guests = guests ? JSON.parse(guests) : [];
+
+            fetch('http://localhost:3000/saveGuests', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ guests: guests }),
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                alert('Data tamu telah disimpan!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat menyimpan data tamu.');
+            });
+        }
+
+        // Function to toggle sidebar
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('show');
+
+            const mainContent = document.querySelector('.main-content');
+            mainContent.classList.toggle('sidebar-open');
+        }
+
+        // Event listener for sidebar toggle button
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            sidebarToggle.addEventListener('click', function() {
+                toggleSidebar();
+            });
+        });
+    </script>
+</body>
+</html>

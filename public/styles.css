@@ -1,0 +1,102 @@
+/* Updated styles for responsive sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 48px 0 0; /* Adjust based on your design */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    width: 250px; /* Fixed width for desktop */
+    background-color: #343a40;
+    color: #fff;
+    overflow-y: auto; /* Enable scrolling on mobile */
+    transition: transform 0.3s ease; /* Transition for animation */
+}
+
+.sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px); /* Adjust based on your design */
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Enable scrolling on mobile */
+}
+
+@media (max-width: 768px) {
+    /* Sidebar collapsing for smaller screens */
+    .sidebar {
+        transform: translateX(-250px); /* Hide off-screen */
+        width: 250px; /* Fixed width */
+    }
+
+    .sidebar.show {
+        transform: translateX(0); /* Show sidebar */
+    }
+
+    /* Adjust main content when sidebar is shown */
+    .main-content {
+        margin-left: 0;
+        transition: margin-left 0.3s ease;
+    }
+
+    .sidebar .nav-link {
+        text-align: center;
+    }
+
+    /* Toggle button styling */
+    #sidebarToggle {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 101;
+        background-color: #343a40;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #sidebarToggle i {
+        font-size: 1.5rem;
+    }
+}
+
+
+/* Gaya untuk konten utama */
+.main-content {
+    margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
+    transition: margin-left 0.3s ease;
+}
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: 250px;
+        position: fixed;
+        z-index: 1000;
+        height: 100%;
+        overflow-y: auto;
+        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+        background-color: #343a40;
+        color: #fff;
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+        transition: margin-left 0.3s ease;
+    }
+
+    .sidebar h3 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}
+
+
+

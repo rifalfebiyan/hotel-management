@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 48px 0 0;
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+            background-color: #343a40;
+        }
+        .sidebar-sticky {
+            position: relative;
+            top: 0;
+            height: calc(100vh - 48px);
+            padding-top: .5rem;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        @supports ((position: -webkit-sticky) or (position: sticky)) {
+            .sidebar-sticky {
+                position: -webkit-sticky;
+                position: sticky;
+                top: 48px;
+                height: calc(100vh - 48px);
+                padding-top: .5rem;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+        }
+        .sidebar h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .add-form {
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .card-deck .card {
+            min-width: 220px;
+            margin-bottom: 20px;
+        }
+        .card:hover {
+            background-color: #add8e6;
+        }
+    </style>
+</head>
+<body>
+        <!-- Sidebar toggle button -->
+        <button id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    
+        <!-- Rest of your HTML content -->
+        <!-- Sidebar and main content remains the same -->
+    
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar">
+                <div class="sidebar-sticky">
+                    <h3 class="text-white mt-3 mb-4">Hotel Gerhana</h3>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active text-white" href="index.html">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="add_guest.html">Tambah Tamu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="guest_list.html">Daftar Tamu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Log Out</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2 class="h2">Dashboard</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <!-- Card layout for hotel rooms -->
+                <div class="card-deck">
+                    <div class="card" onclick="openGuestForm('201', 'Kelas 1')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 201</h5>
+                            <p class="card-text">Kelas 1</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('202', 'Kelas 1')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 202</h5>
+                            <p class="card-text">Kelas 1</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('203', 'Kelas Family')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 203</h5>
+                            <p class="card-text">Kelas Family</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('210', 'Kelas 2')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 210</h5>
+                            <p class="card-text">Kelas 2</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('211', 'Kelas 2')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 211</h5>
+                            <p class="card-text">Kelas 2</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('212', 'Kelas 2')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 212</h5>
+                            <p class="card-text">Kelas 2</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('213', 'Kelas VIP')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 213</h5>
+                            <p class="card-text">Kelas VIP</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('214', 'Kelas VIP')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 214</h5>
+                            <p class="card-text">Kelas VIP</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('215', 'Kelas VIP')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 215</h5>
+                            <p class="card-text">Kelas VIP</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('204', 'Ekonomi 2')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 204</h5>
+                            <p class="card-text">Ekonomi 2</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('205', 'Ekonomi 2')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 205</h5>
+                            <p class="card-text">Ekonomi 2</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('206', 'Ekonomi 2')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 206</h5>
+                            <p class="card-text">Ekonomi 2</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('207', 'Ekonomi 2')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 207</h5>
+                            <p class="card-text">Ekonomi 2</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('208', 'Ekonomi 2')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 208</h5>
+                            <p class="card-text">Ekonomi 2</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('221', 'Ekonomi 1')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 221</h5>
+                            <p class="card-text">Ekonomi 1</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('222', 'Ekonomi 1')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 222</h5>
+                            <p class="card-text">Ekonomi 1</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('223', 'Ekonomi 1')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 223</h5>
+                            <p class="card-text">Ekonomi 1</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('224', 'Ekonomi 1')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 224</h5>
+                            <p class="card-text">Ekonomi 1</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('225', 'Ekonomi 1')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 225</h5>
+                            <p class="card-text">Ekonomi 1</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('226', 'Ekonomi 1')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 226</h5>
+                            <p class="card-text">Ekonomi 1</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="openGuestForm('227', 'Ekonomi 1')">
+                        <div class="card-body">
+                            <h5 class="card-title">Room 227</h5>
+                            <p class="card-text">Ekonomi 1</p>
+                        </div>
+                    </div>
+                    <!-- Add more room cards as needed -->
+                </div>
+
+                <!-- Guest Form Modal -->
+                <div class="modal fade" id="guestFormModal" tabindex="-1" aria-labelledby="guestFormModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="guestFormModalLabel">Tambah Tamu</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="hotelForm">
+                                    <div class="form-group">
+                                        <label for="name">Nama Tamu</label>
+                                        <input type="text" class="form-control" id="name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="roomNumber">Nomor Kamar</label>
+                                        <input type="text" class="form-control" id="roomNumber" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="roomType">Jenis Kamar</label>
+                                        <input type="text" class="form-control" id="roomType" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pricePerNight">Harga per Malam</label>
+                                        <input type="text" class="form-control" id="pricePerNight" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkIn">Check In</label>
+                                        <input type="date" class="form-control" id="checkIn" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkOut">Check Out</label>
+                                        <input type="date" class="form-control" id="checkOut" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="totalPrice">Total Harga</label>
+                                        <input type="text" class="form-control" id="totalPrice" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nik">NIK</label>
+                                        <input type="text" class="form-control" id="nik" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Alamat</label>
+                                        <input type="text" class="form-control" id="address" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone">Nomor Telepon</label>
+                                        <input type="text" class="form-control" id="phone" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('hotelForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const roomNumber = document.getElementById('roomNumber').value;
+            const roomType = document.getElementById('roomType').value;
+            const pricePerNight = parseInt(document.getElementById('pricePerNight').value);
+            const checkIn = document.getElementById('checkIn').value;
+            const checkOut = document.getElementById('checkOut').value;
+            const nik = document.getElementById('nik').value;
+            const address = document.getElementById('address').value;
+            const phone = document.getElementById('phone').value;
+
+            const guest = {
+                name: name,
+                roomNumber: roomNumber,
+                roomType: roomType,
+                price: pricePerNight,
+                checkIn: checkIn,
+                checkOut: checkOut,
+                nik: nik,
+                address: address,
+                phone: phone
+            };
+
+            let guests = localStorage.getItem('guests') ? JSON.parse(localStorage.getItem('guests')) : [];
+            guests.push(guest);
+            localStorage.setItem('guests', JSON.stringify(guests));
+
+            alert('Form submitted successfully!');
+            $('#guestFormModal').modal('hide');
+
+            // Redirect to guest list page
+            window.location.href = 'guest_list.html';
+        });
+
+        function openGuestForm(roomNumber, roomType) {
+            document.getElementById('roomNumber').value = roomNumber;
+            document.getElementById('roomType').value = roomType;
+            const pricePerNight = calculatePricePerNight(roomType);
+            document.getElementById('pricePerNight').value = pricePerNight;
+
+            // Hitung total harga berdasarkan tanggal check-in dan check-out
+            const checkInDate = new Date(document.getElementById('checkIn').value);
+            const checkOutDate = new Date(document.getElementById('checkOut').value);
+            const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
+            const totalPrice = pricePerNight * nights;
+
+            document.getElementById('totalPrice').value = totalPrice;
+
+            $('#guestFormModal').modal('show');
+        }
+
+        function calculatePricePerNight(roomType) {
+            switch (roomType) {
+                case 'Kelas 1':
+                    return 140000;
+                case 'Kelas Family':
+                    return 160000;
+                case 'Kelas 2':
+                    return 120000;
+                case 'Kelas VIP':
+                    return 250000;
+                case 'Ekonomi 2':
+                    return 65000;
+                case 'Ekonomi 1':
+                    return 75000;
+                default:
+                    return 0;
+            }
+        }
+     // Function to toggle sidebar
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('show');
+
+        const mainContent = document.querySelector('.main-content');
+        mainContent.classList.toggle('sidebar-open');
+    }
+
+    // Event listener for sidebar toggle button
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        sidebarToggle.addEventListener('click', function() {
+            toggleSidebar();
+        });
+    });
+    </script>
+</body>
+</html>
